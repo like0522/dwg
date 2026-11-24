@@ -1,0 +1,20 @@
+# AutoCAD temporary & backup files
+*.bak
+*.bk1
+*.bk2
+*.dwl
+*.dwl2
+*.ac$
+*.sv$
+plot.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Environment / IDE
+.understand/
+.vscode/
+Thumbs.db
+Desktop.ini
