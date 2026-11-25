@@ -1,8 +1,9 @@
 ;; Fast CAD Entity Dumper for Fabrication Inspection
 ;; Dumps TEXT, MTEXT, DIMENSION, LINE, CIRCLE, ARC, LWPOLYLINE
 
-(defun c:DumpFullDrawing ( / f ss i ent ed typ lay p1 p2 p3 val str h rad )
-  (setq f (open "C:/Users/like/scpi_engine/brain/cache/lisp_dump.txt" "w"))
+(defun c:DumpFullDrawing ( / f ss i ent ed typ lay p1 p2 p3 val str h rad outpath )
+  (setq outpath (strcat (getvar "DWGPREFIX") "lisp_dump.txt"))
+  (setq f (open outpath "w"))
   (if f
     (progn
       (write-line "=== TEXTS ===" f)
@@ -89,7 +90,7 @@
       )
 
       (close f)
-      (princ "\nFULL DUMP COMPLETE!")
+      (princ (strcat "\nFULL DUMP COMPLETE: " outpath))
     )
   )
   (princ)

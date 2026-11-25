@@ -9,6 +9,12 @@ AutoCAD DWG 도면의 무인(Headless) 고속 DXF 변환 및 정밀 파싱/분�
 
 ## 실행 방법
 ```powershell
-# DWG 변환 및 분석 원샷 실행
-uv run --with ezdxf python dwg_pipeline.py "도면명.dwg"
+# DWG 변환 및 분석 원샷 실행 (.venv 환경)
+.\.venv\Scripts\python dwg_pipeline.py "도면명.dwg"
+
+# 용접 기호 AI 자동 검출 (YOLO)
+.\.venv\Scripts\python detect_weld_symbols.py "도면이미지.png"
 ```
+
+## 통합 검도 스킬
+- [.agents/skills/metal-fabrication-qa/SKILL.md](.agents/skills/metal-fabrication-qa/SKILL.md) (v3.1)
