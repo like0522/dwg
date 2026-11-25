@@ -1,0 +1,25 @@
+# DXF binary/backup files
+*.bak
+*.dxf~
+*.dwg
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Output
+*.qc_report.xlsx
+result.json
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini

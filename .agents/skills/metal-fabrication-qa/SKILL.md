@@ -194,22 +194,36 @@ uv run --with ezdxf python inspect_drawing.py "신규도면.dxf"
 
 ---
 
-## 7. 참고 오픈소스 도구 및 확장 가능 리소스
+## 7. 설치 완료된 주요 오픈소스 도구 및 실행 가이드
 
-제관/용접/도면 검도 자동화에 활용 가능한 GitHub 오픈소스:
+프로젝트 `tools/` 디렉터리에 설치 완료된 최신 오픈소스 도구와 실행 방법:
 
-| 프로젝트 | 용도 | URL |
-|---|---|---|
-| `ezdxf` (mozman) | DXF 읽기/쓰기/분석 핵심 라이브러리 | https://github.com/mozman/ezdxf |
-| `sw-drawing-qc` (linxiaxiaofeng) | DXF/PDF 도면 QC, ISO 2768/2553 프리셋 | https://github.com/linxiaxiaofeng/sw-drawing-qc |
-| `weldCalloutIdentifier` (RylanBosquez) | YOLO 기반 용접 기호 자동 인식 | https://github.com/RylanBosquez/weldCalloutIdentifier |
-| `ConstructDrawingAI` (A-SHOJAEI) | 2D 도면 → 구조화 데이터 AI 파이프라인 | https://github.com/A-SHOJAEI/ConstructDrawingAI |
-| `FreeCAD_SheetMetal` (shaise) | 판금 모델링/K-factor/벤드 체크 | https://github.com/shaise/FreeCAD_SheetMetal |
+| 프로젝트 | 설치 경로 | 핵심 기능 | 실행 환경 및 방법 |
+|---|---|---|---|
+| `ezdxf` (v1.4.5) | `.venv` 전역 | DXF 2D/3D 파싱, BOM/치수/도곽 추출 | `.\.venv\Scripts\python <script.py>` |
+| `weldCalloutIdentifier` | `tools/weldCalloutIdentifier` | YOLO 기반 용접 기호 15종 자동 인식 | `.\.venv\Scripts\python detect_weld_symbols.py <도면이미지.png>` |
+| `sw-drawing-qc` | `tools/sw-drawing-qc` | DXF/PDF 도면 품질 검사, ISO 2553/2768 | `skills/sw-drawing-qc.md`, `skills/sw-drawing-qc-pro.md` 규칙 적용 |
+| `ConstructDrawingAI` | `tools/ConstructDrawingAI` | 2D 기술 도면 구조화 및 수량 산출(Takeoff) | `.\.venv\Scripts\python tools/ConstructDrawingAI/backend/app.py` |
+| `FreeCAD_SheetMetal` | `tools/FreeCAD_SheetMetal` | 판금 굽힘 전개(Unfold), K-factor 계산 | `.\.venv\Scripts\python tools/FreeCAD_SheetMetal/tools/calc-unfold.py` |
 
-### 향후 통합 검토 사항
-1. **YOLO 용접 기호 인식** — `weldCalloutIdentifier` 모델을 DXF→이미지 변환 후 적용하여 용접 기호 누락 자동 탐지
-2. **sw-drawing-qc 프리셋** — `sheet_metal`/`welding` 프리셋의 ISO 2553 규칙을 본 스킬 파이프라인에 병합
-3. **Shapely 공간 인덱싱** — 텍스트 라벨 → 가장 가까운 형상 폴리곤 자동 매칭 (현재 Y좌표 기반 → R-Tree 기반으로 고도화)
+### 7.1 용접 기호 AI 자동 검출기 실행 예시
+AWS/ISO 용접 기호 15종(Fillet, Groove, Tail, All-Around 등) 자동 인식:
+```powershell
+.\.venv\Scripts\python detect_weld_symbols.py "tools/weldCalloutIdentifier/assets/weldExamples/example1.png"
+```
+*출력 예시:*
+```text
+=== DETECTED WELD SYMBOLS: 3 items ===
+ - calloutTail: conf=0.911 bbox=[438, 22, 471, 86]
+ - filletWeld: conf=0.888 bbox=[318, 48, 386, 117]
+ - calloutTip: conf=0.608 bbox=[50, 221, 69, 261]
+```
+
+### 7.2 판금 절곡(Bend) & 전개 치수 계산기 실행 예시
+내측 반경(r), 판두께(T), K-factor, 절곡 각도 기반 전개장(BA) 계산:
+```powershell
+.\.venv\Scripts\python tools/FreeCAD_SheetMetal/tools/calc-unfold.py
+```
 
 ---
 
@@ -231,4 +245,5 @@ uv run --with ezdxf python inspect_drawing.py "신규도면.dxf"
 |---|---|---|
 | v1.0 | 2025-11-25 | 초기 스킬 작성 (3단계 검증, 후가공 원칙) |
 | v1.1 | 2025-11-25 | 5단계 검증 확장, Blank Allowance 테이블 추가 |
-| v2.0 | 2025-11-25 | 스크립트 참조 테이블, 체크리스트, 용접 기호 규칙, 오픈소스 참조, DXF 주의사항 대폭 추가 |
+| v2.0 | 2026-11-25 | 스크립트 참조 테이블, 체크리스트, 용접 기호 규칙, 오픈소스 참조, DXF 주의사항 대폭 추가 |
+| v2.1 | 2026-11-25 | 오픈소스 도구 5종 최신 설치 및 .venv 환경 구축, detect_weld_symbols.py 래퍼 연동 |
