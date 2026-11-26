@@ -33,3 +33,18 @@ When exporting or inspecting flat patterns (`.dxf`) for CNC cutting:
    - Convert splines/ellipses to polylines/arcs if required by legacy nesting CAM.
    - Remove dimension lines, centerlines, text, and title blocks from cutting layers—keep only outer contour and internal hole contours on dedicated cutting layers.
 3. **Closed Contours**: Outer profile and every internal cutout must be single closed loops with zero duplicate overlapping segments.
+
+---
+
+## 4. Pipe Branch (Saddle / 가지관) Fabrication & Flat Pattern Check
+
+When inspecting 90° pipe-to-pipe branch (가지관) drawings and plate-rolled flat patterns:
+1. **Inner-Radius Saddle Intersection (내경 기준 새들 교차)**:
+   - Verify the saddle cut curve uses the branch **inner radius** ($r_{Bi} = \text{OD}_b/2 - t$) intersecting the main pipe outer radius ($r_M = \text{OD}_m/2$), i.e., $z(\theta) = \sqrt{r_M^2 - (r_{Bi}\sin\theta)^2}$, so the branch inner wall does not protrude or leave an excessive root gap at the saddle.
+2. **Neutral-Axis Rolling Width (중립축 기준 전개폭)**:
+   - Verify plate rolling width matches $W = \pi \cdot (\text{OD}_b - t)$ (not $\pi \cdot \text{OD}_b$ or $\pi \cdot \text{ID}_b$).
+3. **Seam Split & Centerline Alignment (용접 심 위치 및 중심선)**:
+   - Check seam cut angle (e.g., $22.5^\circ$, $30^\circ$, $45^\circ$ offset vs $0^\circ$/$90^\circ$): offsetting avoids welding directly on the saddle peak/valley.
+   - Verify `CL` lines in the flat pattern align strictly with the **true peaks and valleys** of the shifted sine-like saddle curve rather than fixed quarters.
+4. **Curve Discretization Density (현도 곡선 세그먼트)**:
+   - For CNC cutting / manual layout, verify curve chord length is fine enough (recommended $\approx 12\text{ mm}$, segment count as a multiple of 4) to prevent faceted polygon edges during rolling and fit-up.
