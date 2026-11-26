@@ -165,6 +165,8 @@ AutoCAD가 실행 중이거나 수만 개의 엔티티가 포함된 경우 **COM
 | CP949 인코딩 | 한글 레이어명/텍스트 깨짐 | `ezdxf.readfile(path, encoding='cp949')`, LISP는 `encoding='cp949'` 저장 |
 | 좌표계 혼용 | UCS/WCS 혼용 시 좌표 오차 | `(trans pt 1 0)`으로 WCS 통일 (LISP), ezdxf는 OCS→WCS 변환 |
 | 치수 텍스트 위조 | `dxf.text` / DXF group `1`에 override 문자열 존재 | 측정값(`42`)과 `text` 필드 비교하여 불일치 적발 |
+| 전개도/도곽 스케일 혼동 | 전개도 자체를 축척 배율로 작도 시 CNC 절단 오류 | 형상·전개도는 항상 `1:1` 실측 작도, 외곽 양식(도곽)과 `DIMSCALE`만 배율 적용 |
+| 헤드리스 콘솔 VLA 오류 | `accoreconsole.exe`에서 ActiveDocument `nil` 반환 | 레이어/도형은 `entmake` 우선 사용, VLA 호출은 `vl-catch-all-apply`로 방어 |
 
 ---
 
